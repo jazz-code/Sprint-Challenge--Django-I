@@ -28,7 +28,8 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', cast=bool)
 
 # ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]' ,'.herokuapp.com']
+# ALLOWED_HOSTS = ['.herokuapp.com']
 
 # Application definition
 
@@ -53,6 +54,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'djorg.urls'
@@ -119,15 +122,13 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.2/howto/static-files/
-
-STATIC_URL = '/static/'
+#  GRAPHENE Config
 
 GRAPHENE = {
     'SCHEMA': 'notes.schema.schema'
 }
+
+#  DRF Config
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
@@ -140,4 +141,10 @@ REST_FRAMEWORK = {
     ),
 }
 
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/2.2/howto/static-files/
 
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# django_heroku.settings(locals())
